@@ -1,4 +1,4 @@
-package com.taberna.componentes;
+package componentes;
 
 import bus.EventBus;
 import eventos.BandaTocandoEvent;

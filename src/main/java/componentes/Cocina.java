@@ -14,17 +14,19 @@ public class Cocina {
     }
 
     private void prepararComida(PedidoRealizadoEvent evento) {
-        for (String item : evento.getItems()) {
-            if (esComida(item)) {
-                try {
-                    System.out.println("[COCINA] Preparando comida: " + item);
-                    Thread.sleep(5000);
-                    eventBus.publicar(new ComidaPreparadaEvent(evento.getPedidoId(), item));
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
+        new Thread(() -> {
+            for (String item : evento.getItems()) {
+                if (esComida(item)) {
+                    try {
+                        System.out.println("[COCINA] Preparando comida: " + item + " (5 segundos)");
+                        Thread.sleep(5000);
+                        eventBus.publicar(new ComidaPreparadaEvent(evento.getPedidoId(), item));
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
                 }
             }
-        }
+        }).start();
     }
 
     private boolean esComida(String item) {

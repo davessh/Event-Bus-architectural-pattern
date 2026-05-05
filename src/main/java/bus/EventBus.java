@@ -25,7 +25,7 @@ public class EventBus {
         Class<?> tipoEvento = evento.getClass();
         List<Suscriptor<?>> lista = suscriptores.getOrDefault(tipoEvento, Collections.emptyList());
 
-        for (Suscriptor<?> suscriptor : lista) {
+        for (Suscriptor<?> suscriptor : new ArrayList<>(lista)) {
             ((Suscriptor<T>) suscriptor).manejar(evento);
         }
     }
